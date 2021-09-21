@@ -3,10 +3,10 @@ site_name: "TODO: ChangeMe Documentation"
 docs_dir: docs/
 
 theme:
-  custom_dir: '/docs/docs/doc/assets/mkdocs/theme'
+  custom_dir: 'theme'
   name: material
-  logo: doc/assets/logo.png
-  favicon: doc/assets/favicon.png
+  logo: assets/logo.png
+  favicon: assets/favicon.png
   
   palette:
     primary: 'black'

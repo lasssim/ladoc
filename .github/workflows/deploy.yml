@@ -1,29 +1,41 @@
-name: Deploy Infrastructure
+name: Create and publish a Docker image
 
 on:
   push:
-    branches:
-      - main
+    branches: ['release']
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  deploy:
-    name: Deploy Site
+  build-and-push-image:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Checkout Repo
-      uses: actions/checkout@v1
+      - name: Log in to the Container registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Create site directory
-      run: mkdir /tmp/site && chmod 777 /tmp/site
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-    - name: Run build of site
-      run: docker-compose -f docker-compose-docs.yml run docs-build
-
-    - name: Sync files
-      uses: SamKirkland/FTP-Deploy-Action@4.1.0
-      with:
-        server: lisuna.org
-        username: ${{ secrets.FTP_USER }}
-        password: ${{ secrets.FTP_PASS }}
-        local-dir: /tmp/site/
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
