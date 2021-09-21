@@ -5,8 +5,8 @@ docs_dir: docs/
 theme:
   custom_dir: 'theme'
   name: material
-  logo: assets/logo.png
-  favicon: assets/favicon.png
+  logo: .ladoc/logo.png
+  favicon: .ladoc/favicon.png
   
   palette:
     primary: 'black'
