@@ -15,7 +15,7 @@ RUN apk add --no-cache \
     nghttp2-dev \
     nodejs \
     npm \
-    && echo -e '#!/usr/bin/env sh \njava -Dplantuml.include.path=.:/docs/docs/doc/assets/puml_helpers/:/docs/docs/ -jar /app/plantuml.jar ${@}' >> /usr/local/bin/plantuml \
+    && echo -e '#!/usr/bin/env sh \njava -Dplantuml.include.path=.:/docs/docs/.ladoc/puml_helpers/:/docs/docs/ -jar /app/plantuml.jar ${@}' >> /usr/local/bin/plantuml \
     && chmod +x /usr/local/bin/plantuml \
     && pip install plantuml-markdown \
     && echo done
