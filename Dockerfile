@@ -1,5 +1,6 @@
 FROM squidfunk/mkdocs-material
 
+ 
 RUN mkdir -p /app
 
 ENV PLANTUML_VERSION 1.2021.7
@@ -32,5 +33,7 @@ RUN cd /tmp/ \
     && unzip master.zip \
     && cd lightgallery-markdown-master \ 
     && python setup.py install
+
+COPY mkdocs /docs
 
 CMD ["serve", "--dev-addr=0.0.0.0:9980"] 
