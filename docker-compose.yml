@@ -2,7 +2,7 @@ version: "3.4"
 services:
 
   ladoc: &ladoc
-    image: ghcr.io/lasssim/docs:latest
+    image: ghcr.io/lasssim/ladoc:main
     ports:
       - "1400:1400"
     volumes: 
