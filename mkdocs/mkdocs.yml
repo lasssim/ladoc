@@ -7,7 +7,8 @@ theme:
   name: material
   logo: assets/logo.png
   favicon: assets/favicon.png
-  
+  static_templates:
+    - redoc.html
   palette:
     primary: 'black'
 
