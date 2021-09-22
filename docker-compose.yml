@@ -1,17 +1,17 @@
 version: "3.4"
 services:
 
-  docs: &docs
+  ladoc: &ladocs
     image: ghcr.io/lasssim/docs:latest
     ports:
-      - "9980:9980"
+      - "1400:1400"
     volumes: 
       - ./:/docs/docs
       - /tmp/cachedir:/tmp/cachedir
       - /tmp/site:/docs/site
 
-  docs-build:
-    <<: *docs
+  ladoc-build:
+    <<: *ladocs
     command: "build --clean"
 
 
