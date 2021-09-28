@@ -11,7 +11,7 @@ def add_hidden_files(files, config):
   print("from on_pre_build")
   pp = pprint.PrettyPrinter(indent=4)
   hidden_files_globs = [
-    ".ladoc/api_helpers/*.yml"
+    ".ladoc/api_helpers/*"
   ]
   for hidden_files_glob in hidden_files_globs:
     absolute_hodden_files_glob = os.path.join(config['docs_dir'], hidden_files_glob)
