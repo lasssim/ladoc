@@ -33,7 +33,9 @@ RUN cd /tmp/ \
     && unzip master.zip \
     && cd lightgallery-markdown-master \ 
     && python setup.py install
+RUN pip install mkdocs-simple-hooks
+
 
 COPY mkdocs /docs
 
-CMD ["serve", "--dev-addr=0.0.0.0:1400"]
+CMD ["serve", "--dev-addr=0.0.0.0:1400", "-v"]
