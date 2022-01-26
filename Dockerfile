@@ -25,6 +25,7 @@ RUN pip install mkdocs-awesome-pages-plugin
 RUN pip install mkdocs-exclude
 RUN pip install mkdocs-plugin-inline-svg
 RUN pip install pygments
+RUN pip install mkdocs-video
 
 RUN npm install yaml oas-resolver
 
