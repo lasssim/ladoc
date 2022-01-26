@@ -20,6 +20,10 @@
         opacity: 1;
       }
 
+      body > header > nav > a > img {
+        width: 100%;
+      }
+
     </style>
 
 {% endblock styles %}
@@ -27,6 +31,7 @@
 {% block libs %}
     {{ super() }}
     <script src="{{ base_url }}/js/lightgallery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/3.1.1/svg.min.js" integrity="sha512-Aj0P6wguH3GVlCfbvTyMM90Zq886ePyMEYlZooRfx+3wcSYyUa6Uv4iAjoJ7yiWdKamqQzKp7yr/TkMQ8EEWbQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 {% endblock libs %}
 
 {% block scripts %}
@@ -100,7 +105,129 @@
 
     }
 
-    class AnimationMoveOnPath {
+    class AnimationBase {
+
+      constructor (svg, animator_element) {
+        this.svg = svg;
+        this.animator_element = animator_element;
+        this.settings = animator_element.dataset;
+        this.promise = null;
+
+        let animation_object_id = this.settings["animates_object"];
+        let animation_object_element = svg.querySelector(`[data-animation_object_id="${animation_object_id}"]`);
+
+        let animation_object = null;
+        if (this.settings["animation_clone_object"]) {
+          animation_object = this.clone_subject(animation_object_element);
+        } else {
+          animation_object = animation_object_element;
+        }
+        
+        this.animation_object = SVG(animation_object);
+
+        this.hide();
+
+        this.duration = parseInt(this.settings["animation_duration"]);
+        this.times    = parseInt(this.settings["animation_times"]);
+        this.fade_out_on_finish = this.settings["animation_fade_out_on_finish"];
+      }
+
+      start() {
+        this.show();
+        return this.promise = new Promise(resolve => {
+          this.promise_resolve = resolve;
+          var runner = this.animation_object.animate({ duration: this.duration, times: this.times });
+          runner.after(this.onFinish.bind(this));
+          this.animate(runner);
+        });
+      }
+
+      animate(runner) {
+        throw new Error('animate() must be implemented!');
+      }
+
+      onFinish() {
+        console.log("Animation finished", this);
+        if (this.fade_out_on_finish) {
+          this.fade_out();
+        }
+        this.promise_resolve();
+      }
+
+      pause() {
+      }
+
+      resume() {
+      }
+
+      fade_out() {
+        this.animation_object.animate().attr("opacity", 0).after(() => {
+          this.hide();
+        });
+      }
+
+      fade_in() {
+        this.show();
+        this.animation_object.attr("opacity", 0);
+        this.animation_object.animate().attr("opacity", 1)
+      }
+
+      hide() {
+        this.animation_object.hide();
+      }
+
+      show() {
+        this.animation_object.attr("opacity", 1);
+        this.animation_object.show();
+      }
+
+      clone_subject(animation_subject_element) {
+        let new_node = animation_subject_element.cloneNode(true);
+        this.svg.appendChild(new_node);
+        return new_node;
+      }
+    }
+
+    class AnimationFadeIn extends AnimationBase {
+      constructor (svg, animator_element) {
+        super(svg, animator_element);
+        this.hide();
+      }
+
+      animate(runner) {
+        this.fade_in();
+      }
+    }
+
+    class AnimationRotate extends AnimationBase {
+      constructor (svg, animator_element) {
+        super(svg, animator_element);
+        this.degrees = parseInt(this.settings["animation_degrees"]);
+      }
+
+      animate(runner) {
+        runner.rotate(this.degrees);
+      }
+    }
+
+    class AnimationMoveOnPath extends AnimationBase {
+      constructor (svg, animator_element) {
+        super(svg, animator_element);
+        this.path = SVG(this.animator_element.querySelector("path"));
+        this.path.hide();
+        this.length = this.path.length();
+      }
+
+      animate(runner) {
+        runner.during((pos) => {
+          var p = this.path.pointAt(pos * this.length)
+          this.animation_object.center(p.x, p.y)
+        })
+      }
+    }
+
+
+    class AnimationMoveOnPath2 {
       constructor (svg, animation_path_element, on_finish) {
         this.svg = svg;
         this.animation_path_element = animation_path_element.querySelector("path");
@@ -146,13 +273,14 @@
         if (this.u < 1) {
           // Keep requesting frames, till animation is ready
           requestAnimationFrame(() => this.run());
+        
+          let point = this.animation_path_element.getPointAtLength(this.u * this.animation_path_element.getTotalLength());
+          this.animation_subject.move_to(point);
+
         } else {
           this.u = 1;
           this.onFinish();
         }
-
-        let point = this.animation_path_element.getPointAtLength(this.u * this.animation_path_element.getTotalLength());
-        this.animation_subject.move_to(point);
 
         if (!this.settings["animation_hide_path"]) {
           this.animation_path.draw_to(this.u);
@@ -186,22 +314,27 @@
         this.svg = svg
 
         this.animation_sequence = Array.from(animation_elements).reduce((r, a) => {
-          let animation_order = parseInt(a.dataset["animation_order"]);
+          let animation_order = parseFloat(a.dataset["animation_order"])*10000000;
           let animation_class = eval("Animation" + a.dataset["animation_type"]);
           let animation = new animation_class(svg, a);
+          console.log(animation_order);
           r[animation_order] = [...r[animation_order] || [], animation];
           return r;
         }, {});
 
+        //this.add_play_button2();
         this.add_play_button();
       }
 
       run() {
+        console.log(this.animation_sequence);
         this.animate_step(Object.entries(this.animation_sequence));
+
       }
 
       animate_step(animation_sequence) {
         let current_animation_step = animation_sequence.shift();
+        console.log(current_animation_step);
         if (current_animation_step) {
           let current_animation_step_promises = current_animation_step[1].map(
             animation => animation.start()
@@ -216,6 +349,18 @@
       }
 
       add_play_button() {
+        let play_button = this.svg.querySelector(`[data-animation_play_button="1"]`);
+
+        if (play_button) {
+//          play_button.remove();
+//          this.svg.appendChild(play_button);
+          play_button.querySelector("path").removeAttribute("pointer-events");
+          play_button.setAttribute("class", "play-button-svg");
+          play_button.onclick = () => this.run();
+        }
+      }
+
+      add_play_button2() {
         var circle = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");
         circle.setAttributeNS(null, "cx", 303);
         circle.setAttributeNS(null, "cy", 421);
