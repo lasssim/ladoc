@@ -33,7 +33,7 @@ plugins:
   - mkdocs-simple-hooks:
       hooks:
         on_files: "ladoc_hooks:add_hidden_files"
-        
+  - mkdocs-video
   - exclude:
       glob:
         - my_service/tmp/*
