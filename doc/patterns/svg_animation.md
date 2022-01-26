@@ -1,0 +1,1 @@
+![](../assets/xmas.drawio.svg)
