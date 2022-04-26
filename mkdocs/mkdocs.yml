@@ -37,5 +37,6 @@ plugins:
   - exclude:
       glob: 
         - node_modules/*
+        - tmp/*
 
 copyright: !ENV [COPYRIGHT, "TODO: Change COPYRIGHT env variable"]
