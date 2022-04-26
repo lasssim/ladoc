@@ -35,7 +35,7 @@ plugins:
         on_files: "ladoc_hooks:add_hidden_files"
   - mkdocs-video
   - exclude:
-      glob:
-        - my_service/tmp/*
+      glob: 
+        - node_modules/*
 
 copyright: !ENV [COPYRIGHT, "TODO: Change COPYRIGHT env variable"]
