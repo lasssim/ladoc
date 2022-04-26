@@ -19,10 +19,14 @@ markdown_extensions:
   - plantuml_markdown:
       format: svg
       cachedir: /tmp/cachedir
-  - codehilite
   - admonition
   - lightgallery
   - attr_list
+  - pymdownx.highlight:
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+
 
 plugins:
   - awesome-pages:
