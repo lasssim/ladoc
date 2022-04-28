@@ -1,6 +1,6 @@
 ---
 # YAML header
-ignore_macros: truie
+ignore_macros: true
 ---
 
 # Using the docs
