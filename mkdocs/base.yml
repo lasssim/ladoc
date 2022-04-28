@@ -16,30 +16,30 @@ edit_uri: !ENV [EDIT_URI, edit/main]
 
 
 markdown_extensions:
-  - plantuml_markdown:
-      format: svg
-      cachedir: /tmp/cachedir
-  - admonition
-  - lightgallery
-  - attr_list
-  - pymdownx.highlight:
-  - pymdownx.inlinehilite
-  - pymdownx.snippets
-  - pymdownx.superfences
+  plantuml_markdown:
+    format: svg
+    cachedir: /tmp/cachedir
+  admonition:
+  lightgallery:
+  attr_list:
+  pymdownx.highlight:
+  pymdownx.inlinehilite:
+  pymdownx.snippets:
+  pymdownx.superfences:
 
 
 plugins:
-  - awesome-pages:
-      collapse_single_pages: true
-  - macros:
-      module_name: mkdocs_macros
-  - inline-svg
-  - mkdocs-simple-hooks:
-      hooks:
-        on_files: "ladoc_hooks:add_hidden_files"
-  - mkdocs-video
-  - exclude:
-      glob:
-        - node_modules/*
-        - tmp/*
+  awesome-pages:
+    collapse_single_pages: true
+  macros:
+    module_name: mkdocs_macros
+  inline-svg:
+  mkdocs-simple-hooks:
+    hooks:
+      on_files: "ladoc_hooks:add_hidden_files"
+  mkdocs-video:
+  exclude:
+    glob:
+      - node_modules/*
+      - tmp/*
 copyright: !ENV [COPYRIGHT, "TODO: Change COPYRIGHT env variable"]
