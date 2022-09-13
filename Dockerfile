@@ -3,7 +3,7 @@ FROM squidfunk/mkdocs-material:7.3.0
  
 RUN mkdir -p /app
 
-ENV PLANTUML_VERSION 1.2022.6
+ENV PLANTUML_VERSION 1.2022.7
 RUN wget https://sourceforge.net/projects/plantuml/files/plantuml.${PLANTUML_VERSION}.jar/download -O /app/plantuml.jar
 
 
