@@ -1,4 +1,4 @@
-FROM squidfunk/mkdocs-material:7.3.0
+FROM squidfunk/mkdocs-material:8.5.6
 
  
 RUN mkdir -p /app
