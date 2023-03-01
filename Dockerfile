@@ -3,7 +3,6 @@ FROM squidfunk/mkdocs-material:9.0.15
  
 RUN mkdir -p /app
 
-
 RUN apk add --no-cache \
     graphviz \
     openjdk8-jre \
