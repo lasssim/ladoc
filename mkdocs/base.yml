@@ -37,6 +37,7 @@ plugins:
   mkdocs-simple-hooks:
     hooks:
       on_files: "ladoc_hooks:add_hidden_files"
+      on_pre_build: "ladoc_hooks:set_build_time_env_var"
   mkdocs-video: {}
   exclude:
     glob:

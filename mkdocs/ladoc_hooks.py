@@ -4,6 +4,7 @@ import glob
 from mkdocs.structure.files import File
 import logging
 import os
+from datetime import datetime
 log = logging.getLogger(__name__)
 
 
@@ -31,3 +32,8 @@ def add_hidden_files(files, config):
       files.append(file)
   #pp.pprint(files)
   return files
+
+def set_build_time_env_var(*args, **kwargs):
+  #print("------ from on_post_build")
+  os.environ['LADOC_BUILD_DATE'] = datetime.now().strftime("%Y-%m-%d")
+  #pp.pprint(os.environ['LADOC_BUILD_TIME'])
