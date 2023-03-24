@@ -31,7 +31,7 @@
     <div class="md-footer-meta__inner md-grid">
 
       <!-- Copyright and theme information -->
-      <div class="md-footer-copyright">
+      <div class="md-footer-copyright" style="padding: 0.6rem 0;">
         {% if config.copyright %}
           <div class="md-footer-copyright__highlight">
             {{ config.copyright }}
@@ -39,7 +39,7 @@
         {% endif %}
       </div>
 
-      <div class="md-footer-copyright">
+      <div class="md-social">
         <a href="https://github.com/lasssim/ladoc">
           LaDoc by Lasssim 
           <img src="/img/lasssim_icon.svg" width="25px" style="vertical-align: middle;"> 
@@ -47,7 +47,6 @@
       </div>
 
       <!-- Social links -->
-      {% include "partials/social.html" %}
     </div>
   </div>
 </footer>

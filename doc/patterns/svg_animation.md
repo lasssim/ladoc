@@ -1,1 +1,1 @@
-![](../assets/xmas.drawio.svg)
+!![](../assets/xmas.drawio.svg)

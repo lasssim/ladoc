@@ -20,13 +20,13 @@ markdown_extensions:
     format: svg
     cachedir: /tmp/cachedir
   admonition:
-  lightgallery:
+  #lightgallery:
   attr_list:
   pymdownx.highlight:
   pymdownx.inlinehilite:
   pymdownx.snippets:
   pymdownx.superfences:
-
+  fancyboxmd:
 
 plugins:
   awesome-pages:
@@ -42,4 +42,12 @@ plugins:
     glob:
       - node_modules/*
       - tmp/*
+
 copyright: !ENV [COPYRIGHT, "TODO: Change COPYRIGHT env variable"]
+
+extra_css:
+  - https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css
+
+extra_javascript:
+  - https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js
+  - https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js

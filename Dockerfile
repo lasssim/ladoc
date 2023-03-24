@@ -21,20 +21,19 @@ RUN wget https://sourceforge.net/projects/plantuml/files/plantuml.${PLANTUML_VER
     && pip install plantuml-markdown \
     && echo done
 
-RUN pip install mkdocs-macros-plugin
-RUN pip install mkdocs-awesome-pages-plugin
-RUN pip install mkdocs-exclude
-RUN pip install pygments
-RUN pip install mkdocs-video
-RUN npm install yaml oas-resolver
-RUN pip install mkdocs-simple-hooks
-RUN pip install mkdocs-with-pdf
+RUN MAKEFLAGS="-j$(nproc)" pip install mkdocs-macros-plugin \
+    mkdocs-awesome-pages-plugin \
+    mkdocs-exclude \
+    pygments \
+    mkdocs-video \
+    mkdocs-simple-hooks \
+    mkdocs-with-pdf \
+    fancyboxmd \
+    && npm install -g yaml oas-resolver
 
-RUN wget https://github.com/g-provost/lightgallery-markdown/archive/master.zip -O /tmp/master.zip
-RUN cd /tmp/ \
-    && unzip master.zip \
-    && cd lightgallery-markdown-master \ 
-    && python setup.py install
+RUN apk del build-base \
+    && rm -rf /var/cache/apk/* \
+    && rm -rf /tmp/*
 
 COPY mkdocs /docs
 
