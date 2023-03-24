@@ -45,4 +45,4 @@ RUN pip install mkdocs-with-pdf
 
 COPY mkdocs /docs
 
-CMD ["serve", "--dev-addr=0.0.0.0:1400", "-v"]
+CMD ["serve", "--dev-addr=0.0.0.0:1400"]
