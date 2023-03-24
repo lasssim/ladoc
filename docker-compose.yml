@@ -11,6 +11,7 @@ services:
       - ./:/docs/docs
       - /tmp/cachedir:/tmp/cachedir
       - /tmp/site:/docs/site
+    env_file: .env
 
   ladoc-build:
     <<: *ladoc

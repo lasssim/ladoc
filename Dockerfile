@@ -7,7 +7,6 @@ RUN apk add --no-cache \
     graphviz \
     openjdk8-jre \
     ttf-droid \
-    #ttf-droid-nonlatin \
     nghttp2-dev \
     nodejs \
     npm \
@@ -25,23 +24,17 @@ RUN wget https://sourceforge.net/projects/plantuml/files/plantuml.${PLANTUML_VER
 RUN pip install mkdocs-macros-plugin
 RUN pip install mkdocs-awesome-pages-plugin
 RUN pip install mkdocs-exclude
-RUN pip install mkdocs-plugin-inline-svg
 RUN pip install pygments
 RUN pip install mkdocs-video
-#RUN pip install git+https://github.com/lasssim/mkdocs.git@master
-#COPY tmp/mkdocs /tmp/mkdocs
-#RUN pip install file:///tmp/mkdocs
-
 RUN npm install yaml oas-resolver
+RUN pip install mkdocs-simple-hooks
+RUN pip install mkdocs-with-pdf
 
 RUN wget https://github.com/g-provost/lightgallery-markdown/archive/master.zip -O /tmp/master.zip
 RUN cd /tmp/ \
     && unzip master.zip \
     && cd lightgallery-markdown-master \ 
     && python setup.py install
-RUN pip install mkdocs-simple-hooks
-RUN pip install mkdocs-with-pdf
-
 
 COPY mkdocs /docs
 

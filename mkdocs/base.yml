@@ -33,7 +33,6 @@ plugins:
     collapse_single_pages: true
   macros:
     module_name: mkdocs_macros
-  #inline-svg: {}
   mkdocs-simple-hooks:
     hooks:
       on_files: "ladoc_hooks:add_hidden_files"
