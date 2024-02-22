@@ -1,4 +1,4 @@
-FROM squidfunk/mkdocs-material:9.1.3
+FROM squidfunk/mkdocs-material:9.5
 
  
 RUN mkdir -p /app
@@ -14,7 +14,7 @@ RUN apk add --no-cache \
 
 RUN pip install --upgrade pip
 
-ENV PLANTUML_VERSION 1.2023.2
+ENV PLANTUML_VERSION 1.2024.3
 RUN wget https://sourceforge.net/projects/plantuml/files/plantuml.${PLANTUML_VERSION}.jar/download -O /app/plantuml.jar \
     && echo -e '#!/usr/bin/env sh \njava -Dplantuml.include.path=.:/docs/docs/.ladoc/puml_helpers/:/docs/docs/ -jar /app/plantuml.jar ${@}' >> /usr/local/bin/plantuml \
     && chmod +x /usr/local/bin/plantuml \
