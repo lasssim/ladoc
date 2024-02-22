@@ -2,6 +2,9 @@ site_name: !ENV [SITE_NAME, "TODO: Change SITE_NAME env variable"]
 
 docs_dir: docs/
 
+exclude_docs: |
+  !.*/
+
 theme:
   custom_dir: 'theme'
   name: material
