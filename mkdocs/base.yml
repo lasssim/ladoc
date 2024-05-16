@@ -29,7 +29,6 @@ markdown_extensions:
   pymdownx.inlinehilite:
   pymdownx.snippets:
   pymdownx.superfences:
-  fancyboxmd:
   def_list:
   pymdownx.tasklist:
     custom_checkbox: true

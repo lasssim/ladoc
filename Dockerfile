@@ -28,7 +28,7 @@ RUN MAKEFLAGS="-j$(nproc)" pip install mkdocs-macros-plugin \
     mkdocs-video \
     mkdocs-simple-hooks \
     mkdocs-with-pdf \
-    fancyboxmd \
+    mkdocs-glightbox \
     && npm install -g yaml oas-resolver
 
 RUN apk del build-base \
