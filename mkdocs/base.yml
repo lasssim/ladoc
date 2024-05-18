@@ -32,6 +32,10 @@ markdown_extensions:
   def_list:
   pymdownx.tasklist:
     custom_checkbox: true
+  md_in_html:
+  pymdownx.emoji:
+    emoji_index: !!python/name:material.extensions.emoji.twemoji 
+    emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
 plugins:
   awesome-pages:
