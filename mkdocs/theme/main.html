@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 
+{% block outdated %}
+  You're not viewing the latest version.
+  <a href="{{ '../' ~ base_url }}"> 
+    <strong>Click here to go to latest.</strong>
+  </a>
+{% endblock %}
+
 {% block styles %}
     {{ super() }}
 
@@ -23,6 +30,10 @@
         width: 100% !important;
       }
 
+      body.outdated {
+        border: 5px solid red;
+      }
+
     </style>
 
 {% endblock styles %}
@@ -34,6 +45,14 @@
 
 {% block scripts %}
     {{ super() }}
+
+    <script>
+      var el = document.querySelector("body")
+      var outdated = __md_get("__outdated", sessionStorage)
+      if (outdated === true && el)
+        el.classList.add("outdated")
+    </script>
+
     <script>
     var elements = document.getElementsByClassName("lightgallery");
     for(var i=0; i<elements.length; i++) {

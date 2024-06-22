@@ -30,6 +30,7 @@ RUN MAKEFLAGS="-j$(nproc)" pip install mkdocs-macros-plugin \
     mkdocs-with-pdf \
     mkdocs-glightbox \
     pymdown-extensions \
+    mike \
     && npm install -g yaml oas-resolver
 
 RUN apk del build-base \
