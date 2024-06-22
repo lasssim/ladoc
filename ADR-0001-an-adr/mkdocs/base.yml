@@ -1,0 +1,74 @@
+site_name: !ENV [SITE_NAME, "TODO: Change SITE_NAME env variable"]
+
+docs_dir: docs/
+
+exclude_docs: |
+  !.*/
+
+theme:
+  custom_dir: 'theme'
+  name: material
+  logo: !ENV [LOGO, assets/images/logo.png]
+  favicon: !ENV [FAVICON, assets/images/favicon.png]
+  static_templates:
+    - redoc.html
+  palette:
+    primary: 'black'
+repo_url: !ENV [REPO_URL, https://change-repo-url-env-var/me] 
+edit_uri: !ENV [EDIT_URI, edit/main]
+
+
+markdown_extensions:
+  plantuml_markdown:
+    format: svg
+    cachedir: /tmp/cachedir
+  admonition:
+  #lightgallery:
+  attr_list:
+  pymdownx.highlight:
+  pymdownx.inlinehilite:
+  pymdownx.snippets:
+  pymdownx.superfences:
+  def_list:
+  pymdownx.tasklist:
+    custom_checkbox: true
+  md_in_html:
+  pymdownx.emoji:
+    emoji_index: !!python/name:material.extensions.emoji.twemoji 
+    emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+plugins:
+  awesome-pages:
+    collapse_single_pages: true
+  macros:
+    module_name: mkdocs_macros
+  mkdocs-simple-hooks:
+    hooks:
+      on_files: "ladoc_hooks:add_hidden_files"
+      on_pre_build: "ladoc_hooks:set_build_time_env_var"
+  mkdocs-video: {}
+  exclude:
+    glob:
+      - node_modules/*
+      - tmp/*
+  glightbox:
+    touchNavigation: true
+    loop: false
+    effect: zoom
+    slide_effect: slide
+    width: 100%
+    height: auto
+    zoomable: true
+    draggable: true
+    skip_classes:
+      - skip-lightbox
+    auto_caption: false
+    caption_position: bottom
+    background: white
+    shadow: true
+    manual: false
+  git_branch:
+    main_branch: main
+
+copyright: !ENV [COPYRIGHT, "TODO: Change COPYRIGHT env variable"]
+

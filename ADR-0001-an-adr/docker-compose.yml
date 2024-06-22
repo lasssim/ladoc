@@ -1,0 +1,32 @@
+services:
+
+  ladoc: &ladoc
+    build:
+      context: .
+    ports:
+      - "1400:1400"
+    volumes: 
+      - ./mkdocs:/docs
+      - ./:/docs/docs
+      - /tmp/cachedir:/tmp/cachedir
+      - /tmp/site:/docs/site
+      - ./mkdocs/git_branch_plugin.py:/usr/local/lib/python3.11/site-packages/git_branch_plugin.py
+      - ./.git:/docs/.git
+
+      #- mkdocs/git_branch_plugin.py:$PACKAGES/
+    env_file: .env
+
+  ladoc-build:
+    <<: *ladoc
+    command: "build --clean"
+
+  mike-build:
+    <<: *ladoc
+    entrypoint: mike
+    command: "deploy main"
+    ports:
+      - "8000:8000"
+    environment:
+      - GIT_COMMITTER_NAME=${GIT_COMMITTER_NAME}
+      - GIT_COMMITTER_EMAIL=${GIT_COMMITTER_EMAIL}
+ 
