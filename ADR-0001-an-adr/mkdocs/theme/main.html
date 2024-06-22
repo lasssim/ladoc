@@ -1,52 +1,16 @@
 {% extends "base.html" %}
 
 {% block outdated %}
-  {{ config.extra}}
   You're not viewing the latest version.
   <a href="{{ '../' ~ base_url }}"> 
     <strong>Click here to go to latest.</strong>
   </a>
 {% endblock %}
 
-{% block header %}
-  {{ super() }}
 
-  {% if config.extra.git_current_branch %}
-    Current branch: {{ config.extra.git_current_branch }}
-
-    {% if config.extra.git_current_branch != config.extra.git_main_branch %}
-      <p style="color: red; font-weight: bold;">Warning: You are viewing the branch '{{ config.extra.git_current_branch }}', which is not the main branch and should not be trusted as the primary source of information.</p>
-    {% endif %}   
-
-    <select id="branchSelect" onchange="location = this.value;">
-      {% for branch in config.extra.git_branches %}
-        <option value="/{{ branch }}">{{ branch }}</option>
-      {% endfor %}
-    </select>
-
-    <script>
-      document.getElementById("branchSelect").value = "/{{ config.extra.git_current_branch }}";
-    </script>
-  {% endif %}
-
-
-
-{% endblock %}
 
 {% block styles %}
     {{ super() }}
-
-
-    {% if config.extra.git_current_branch != config.extra.git_main_branch %}
-    <style>
-
-      
-      body {
-        border: 10px solid red;
-      }
-    </style>
-    {% endif %}
-
 
     <style>
       .play-button-svg {
@@ -81,7 +45,10 @@
     {{ super() }}
 
     <script>
-
+      var el = document.querySelector("body")
+      var outdated = __md_get("__outdated", sessionStorage)
+      if (outdated === true && el)
+        el.classList.add("outdated")
     </script>
 
     <script>

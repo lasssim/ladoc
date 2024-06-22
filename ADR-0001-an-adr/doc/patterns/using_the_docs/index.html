@@ -35,18 +35,6 @@
 
     
 
-
-    
-    <style>
-
-      
-      body {
-        border: 10px solid red;
-      }
-    </style>
-    
-
-
     <style>
       .play-button-svg {
         width: 200px;
@@ -133,7 +121,6 @@
           <aside class="md-banner md-banner--warning">
             <div class="md-banner__inner md-grid md-typeset">
               
-  {'version': {'default': 'main', 'provider': 'mike'}, 'git_current_branch': 'ADR/0001-an-adr', 'git_branches': ['main', 'ADR/0001-an-adr'], 'git_main_branch': 'main'}
   You're not viewing the latest version.
   <a href="../../../.."> 
     <strong>Click here to go to latest.</strong>
@@ -146,7 +133,6 @@
       </div>
     
     
-  
       
 
   
@@ -201,30 +187,6 @@
   
 </header>
     
-
-  
-    Current branch: ADR/0001-an-adr
-
-    
-      <p style="color: red; font-weight: bold;">Warning: You are viewing the branch 'ADR/0001-an-adr', which is not the main branch and should not be trusted as the primary source of information.</p>
-       
-
-    <select id="branchSelect" onchange="location = this.value;">
-      
-        <option value="/main">main</option>
-      
-        <option value="/ADR/0001-an-adr">ADR/0001-an-adr</option>
-      
-    </select>
-
-    <script>
-      document.getElementById("branchSelect").value = "/ADR/0001-an-adr";
-    </script>
-  
-
-
-
-
     <div class="md-container" data-md-component="container">
       
       
@@ -994,7 +956,10 @@ although there are some known issues:</p>
     
 
     <script>
-
+      var el = document.querySelector("body")
+      var outdated = __md_get("__outdated", sessionStorage)
+      if (outdated === true && el)
+        el.classList.add("outdated")
     </script>
 
     <script>
