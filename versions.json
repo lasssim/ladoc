@@ -1,5 +1,10 @@
 [
   {
+    "version": "main",
+    "title": "main",
+    "aliases": []
+  },
+  {
     "version": "ADR-0001-an-adr",
     "title": "ADR-0001-an-adr",
     "aliases": []
