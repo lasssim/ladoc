@@ -49,4 +49,5 @@ plugins:
 
 extra:
   version:
+    default: main
     provider: mike

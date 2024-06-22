@@ -1,5 +1,4 @@
 import os
-import subprocess
 
 def define_env(env):
     """
@@ -27,4 +26,3 @@ def define_env(env):
                 if f.endswith('.md') and f != 'index.md':
                     subnav.append(f"{sub_indent}- [{f[:-3]}]({root}/{f})")
         return '\n'.join(subnav)   
-    
