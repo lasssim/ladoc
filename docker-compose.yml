@@ -10,6 +10,7 @@ services:
       - ./:/docs/docs
       - /tmp/cachedir:/tmp/cachedir
       - /tmp/site:/docs/site
+      - ./.git/:/docs/.git
 
       #- mkdocs/git_branch_plugin.py:$PACKAGES/
     env_file: .env
