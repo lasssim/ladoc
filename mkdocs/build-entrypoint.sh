@@ -19,6 +19,7 @@ echo "  - GIT_URL_FROM: $GIT_URL_FROM"
 echo "  - GIT_URL_TO: $GIT_URL_TO"
 echo "  - DEPLOY_KEY: $DEPLOY_KEY"
 
+mkdir -p /root/.ssh
 echo $DEPLOY_KEY > /root/.ssh/id_rsa
 
 #echo "  Changing git url to use CI_JOB_TOKEN..."
