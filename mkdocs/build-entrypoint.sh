@@ -1,6 +1,7 @@
 #!/bin/sh
 
 set -e
+set -x
 
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 VERSION_NAME=$(echo $CURRENT_BRANCH | tr '/' '-')
