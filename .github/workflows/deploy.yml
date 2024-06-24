@@ -31,21 +31,23 @@ jobs:
 
       # Dockerfile.base is a shared base image for all other images
       - name: Check if Dockerfile.base was changed
-        id: check_file
-        run: |
-          echo "::set-output name=modified::$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^Dockerfile.base$' || echo false)"
-        shell: bash
+        uses: dorny/paths-filter@v3
+        id: base_changed
+        with:
+          filters: |
+            base:
+              - 'Dockerfile.base'
       
       - name: Extract metadata (tags, labels) for Docker base image
         id: meta_base
-        if: steps.check_file.outputs.modified == 'Dockerfile.base'
+        if: steps.base_changed.outputs.base == 'true'
         uses: docker/metadata-action@v3
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_BASE }}
 
       - name: Build and push Docker base image
         uses: docker/build-push-action@v2
-        if: steps.check_file.outputs.modified == 'Dockerfile.base'
+        if: steps.base_changed.outputs.base == 'true'
         with:
           context: .
           file: ./Dockerfile.base
