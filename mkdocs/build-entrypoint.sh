@@ -23,7 +23,7 @@ mkdir -p /root/.ssh
 echo $DEPLOY_KEY > /root/.ssh/id_rsa
 
 # Convert HTTPS URL to SSH URL
-GIT_URL_TO=$(echo $GIT_URL_TO | sed -E 's#https://([^/]+)/(.*)#git@\1:\2#')
+GIT_URL_TO=$(echo $GIT_URL_TO | sed -E 's#https://([^:]+):([^@]+)@([^/]+)/(.*)#git@\3:\4#')
 echo "  - GIT_URL_TO: $GIT_URL_TO"
 #echo "  Changing git url to use CI_JOB_TOKEN..."
 # Change the git url to use the CI_JOB_TOKEN
