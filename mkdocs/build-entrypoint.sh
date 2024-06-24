@@ -20,7 +20,9 @@ echo "  - GIT_URL_TO: $GIT_URL_TO"
 
 echo "  Changing git url to use CI_JOB_TOKEN..."
 # Change the git url to use the CI_JOB_TOKEN
-git config --global url."$GIT_URL_TO".insteadOf "$GIT_URL_FROM" 
+#git config --global url."$GIT_URL_TO".insteadOf "$GIT_URL_FROM" 
+git remote set-url origin "$GIT_URL_TO"
+
 
 echo "  Setting default branch to $DEFAULT_BRANCH..." 
 mike set-default $DEFAULT_BRANCH --allow-undefined --branch $DEPLOY_BRANCH
