@@ -22,6 +22,9 @@ echo "  - DEPLOY_KEY: $DEPLOY_KEY"
 mkdir -p /root/.ssh
 echo $DEPLOY_KEY > /root/.ssh/id_rsa
 
+export GIT_SSH_COMMAND="ssh -i /root/.ssh/id_rsa -o StrictHostKeyChecking=no"
+
+
 # Convert HTTPS URL to SSH URL
 GIT_URL_TO=$(echo $GIT_URL_TO | sed -E 's#https://([^:]+):([^@]+)@([^/]+)/(.*)#git@\3:\4#')
 echo "  - GIT_URL_TO: $GIT_URL_TO"
