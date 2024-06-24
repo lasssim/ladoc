@@ -21,7 +21,7 @@ echo "  - DEPLOY_KEY: $DEPLOY_KEY"
 
 mkdir -p /root/.ssh
 echo $DEPLOY_KEY > /root/.ssh/id_rsa
-
+chmod 600 /root/.ssh/id_rsa
 export GIT_SSH_COMMAND="ssh -i /root/.ssh/id_rsa -o StrictHostKeyChecking=no"
 
 
