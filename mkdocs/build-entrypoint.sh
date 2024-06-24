@@ -35,4 +35,6 @@ echo "  Building site..."
 # Build the site
 mike deploy $VERSION_NAME --push --branch $DEPLOY_BRANCH
 
+git push -v origin $DEPLOY_BRANCH
+
 echo "  done."
