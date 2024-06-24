@@ -10,7 +10,6 @@ services:
       - ./:/docs/docs
       - /tmp/cachedir:/tmp/cachedir
       - /tmp/site:/docs/site
-      - ./.git:/docs/.git
 
       #- mkdocs/git_branch_plugin.py:$PACKAGES/
     env_file: .env
@@ -21,8 +20,7 @@ services:
 
   mike-build:
     <<: *ladoc
-    entrypoint: mike
-    command: "deploy main"
+    entrypoint: ./build-entrypoint.sh
     ports:
       - "8000:8000"
     environment:
