@@ -1,4 +1,4 @@
-FROM lasssim/ladoc-base:main
+FROM ghcr.io/lasssim/ladoc-base:main
 
 COPY mkdocs /docs
 
