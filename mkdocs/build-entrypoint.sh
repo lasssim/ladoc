@@ -33,7 +33,7 @@ mike set-default $DEFAULT_BRANCH --allow-undefined --branch $DEPLOY_BRANCH
 
 echo "  Building site..."
 # Build the site
-mike deploy $VERSION_NAME --push --branch $DEPLOY_BRANCH
+mike deploy $VERSION_NAME --branch $DEPLOY_BRANCH
 
 git push -v origin $DEPLOY_BRANCH
 
