@@ -14,7 +14,7 @@ RUN apk add --no-cache \
 
 RUN pip install --upgrade pip
 
-ENV PLANTUML_VERSION 1.2024.3
+ENV PLANTUML_VERSION 1.2024.5
 RUN wget https://github.com/plantuml/plantuml/releases/download/v${PLANTUML_VERSION}/plantuml-${PLANTUML_VERSION}.jar -O /app/plantuml.jar \
     && echo -e '#!/usr/bin/env sh \njava -Dplantuml.include.path=.:/docs/docs/.ladoc/puml_helpers/:/docs/docs/ -jar /app/plantuml.jar ${@}' >> /usr/local/bin/plantuml \
     && chmod +x /usr/local/bin/plantuml \

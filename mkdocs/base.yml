@@ -57,6 +57,7 @@ plugins:
     glob:
       - node_modules/*
       - tmp/*
+      - .git/*
   glightbox:
     touchNavigation: true
     loop: false
