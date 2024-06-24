@@ -17,11 +17,14 @@ echo "  - GIT_COMMITTER_NAME: $GIT_COMMITTER_NAME"
 echo "  - GIT_COMMITTER_EMAIL: $GIT_COMMITTER_EMAIL"
 echo "  - GIT_URL_FROM: $GIT_URL_FROM"
 echo "  - GIT_URL_TO: $GIT_URL_TO"
+echo "  - DEPLOY_KEY: $DEPLOY_KEY"
 
-echo "  Changing git url to use CI_JOB_TOKEN..."
+echo $DEPLOY_KEY > /root/.ssh/id_rsa
+
+#echo "  Changing git url to use CI_JOB_TOKEN..."
 # Change the git url to use the CI_JOB_TOKEN
 #git config --global url."$GIT_URL_TO".insteadOf "$GIT_URL_FROM" 
-git remote set-url origin "$GIT_URL_TO"
+#git remote set-url origin "$GIT_URL_TO"
 
 
 echo "  Setting default branch to $DEFAULT_BRANCH..." 
