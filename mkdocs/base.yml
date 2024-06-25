@@ -75,5 +75,10 @@ plugins:
     shadow: true
     manual: false
 
+extra:
+  version:
+    default: main
+    provider: mike
+
 copyright: !ENV [COPYRIGHT, "TODO: Change COPYRIGHT env variable"]
 
