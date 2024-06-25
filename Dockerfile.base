@@ -10,7 +10,7 @@ RUN mkdir -p /app
 # Install dependencies and clean up in the same layer to reduce image size
 RUN apk add --no-cache \
   graphviz \
-  openjdk8-jre-base \
+  openjdk8-jre \
   ttf-droid \
   nghttp2-dev \
   nodejs \
