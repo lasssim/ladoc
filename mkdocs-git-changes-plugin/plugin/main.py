@@ -73,11 +73,11 @@ class GitChangesPlugin(BasePlugin):
     def wrap_added_words(self, diff):
         # Process the markdown content and wrap the added words in an HTML tag
         added_word_pattern = re.compile(r'\{\+(.*?)\+\}')
-        markdown = re.sub(added_word_pattern, r'<span class="git_changes_added">\1</span>', diff)
+        markdown = re.sub(added_word_pattern, r'<span class="git_changes_added" markdown="1">\1</span>', diff)
         return markdown
 
     def wrap_removed_words(self, diff):
         # Process the markdown content and wrap the removed words in an HTML tag
         removed_word_pattern = re.compile(r'\[-(.*?)-\]')
-        markdown = re.sub(removed_word_pattern, r'<span class="git_changes_removed">\1</span>', diff)
+        markdown = re.sub(removed_word_pattern, r'<span class="git_changes_removed" markdown="1">\1</span>', diff)
         return markdown
