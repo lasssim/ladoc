@@ -23,6 +23,8 @@ theme:
 repo_url: !ENV [REPO_URL, https://change-repo-url-env-var/me] 
 edit_uri: !ENV [EDIT_URI, edit/main]
 
+extra_css:
+  - assets/styles/git_changes.css
 
 markdown_extensions:
   plantuml_markdown:
@@ -76,6 +78,7 @@ plugins:
     manual: false
   git-changes: 
     reference-branch: main
+    doc_path: /docs/docs/
     
 
 extra:
