@@ -74,6 +74,9 @@ plugins:
     background: white
     shadow: true
     manual: false
+  git-changes: 
+    reference-branch: main
+    
 
 extra:
   version:
