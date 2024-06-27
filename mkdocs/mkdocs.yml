@@ -41,10 +41,6 @@ plugins:
     #debug_html: true
     #show_anchors: true
     #verbose: true
-  mike:
-    alias_type: copy
-    version_selector: true
-    css_dir: css
 
 extra:
   version:
