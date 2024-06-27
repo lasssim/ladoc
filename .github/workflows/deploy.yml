@@ -37,6 +37,7 @@ jobs:
           filters: |
             base:
               - 'Dockerfile.base'
+              - mkdocs-git-changes-plugin/**
       
       - name: Extract metadata (tags, labels) for Docker base image
         id: meta_base
