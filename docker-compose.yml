@@ -1,5 +1,11 @@
 services:
 
+  ladoc-base:
+    build:
+      context: .
+      dockerfile: Dockerfile.base
+    image: ghcr.io/lasssim/ladoc-base:main
+
   ladoc: &ladoc
     build:
       context: .
