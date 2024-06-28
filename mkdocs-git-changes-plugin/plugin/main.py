@@ -102,14 +102,14 @@ class GitChangesPlugin(BasePlugin):
     def fetch_reference_branch_if_not_locally_available(self):
         # print status of the repo
         print("Repo status")
-        self.log.info(self.repo.git.status())
+        self.log.info(self.repo.git.status('-v'))
         try:
-            ret = self.repo.git.rev_parse('--verify', self.reference_branch)
+            ret = self.repo.git.rev_parse('--verify', '-v', self.reference_branch)
             print("Repo verify")
             self.log.info(ret)
         except:
-            ret = self.repo.git.fetch('origin', self.reference_branch)
+            ret = self.repo.git.fetch('origin', '-v', self.reference_branch)
             print("Fetch reference branch")
             self.log.info(ret)
             print("Repo verify")
-            self.log.info(self.repo.git.rev_parse('--verify', self.reference_branch))
+            self.log.info(self.repo.git.rev_parse('--verify', '-v', self.reference_branch))
