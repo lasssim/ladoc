@@ -44,7 +44,7 @@ class GitChangesPlugin(BasePlugin):
         return markdown
 
     def wrap_page(self, markdown):
-        return f'<div class="git_changes_page" markdown="1">\n\n' + markdown + '\n\n</div>'
+        return f'<div class="git_changes_page" markdown="1">' + markdown + '</div>'
 
     def remove_diff_header(self, diff):
         # Remove the diff header
