@@ -7,9 +7,6 @@ ENV PLANTUML_VERSION 1.2024.5
 # Create app directory
 RUN mkdir -p /app
 
-# Copy the plugin to the app directory
-COPY ./mkdocs-git-changes-plugin/ /app/mkdocs-git-changes-plugin
-
 # Install dependencies and clean up in the same layer to reduce image size
 RUN apk add --no-cache \
   graphviz \
@@ -31,7 +28,6 @@ RUN apk add --no-cache \
     mkdocs-with-pdf \
     mkdocs-glightbox \
     pymdown-extensions \
-    /app/mkdocs-git-changes-plugin \
     plantuml-markdown \
   # Download PlantUML
   && wget https://github.com/plantuml/plantuml/releases/download/v${PLANTUML_VERSION}/plantuml-${PLANTUML_VERSION}.jar -O /app/plantuml.jar \
@@ -47,3 +43,8 @@ RUN apk add --no-cache \
   && rm -rf /root/.cache/pip/* \
   && rm -rf /root/.npm/*
 
+
+# Copy the plugin to the app directory
+COPY ./mkdocs-git-changes-plugin/ /app/mkdocs-git-changes-plugin
+
+RUN pip install /app/mkdocs-git-changes-plugin
