@@ -21,7 +21,18 @@ class GitChangesPlugin(BasePlugin):
 
         self.repo = Repo(self.doc_path)
         self.repo.git.config('--global', '--add', 'safe.directory', self.doc_path)
- 
+
+        print(f"Repo description: {self.repo.description}")
+        print(f"Repo directory: {self.repo.working_tree_dir}")
+        print(f"Is the repo bare? {self.repo.bare}")
+
+        print("Repo status:")
+        print(self.repo.git.status())
+
+        print("Branches:")
+        for branch in self.repo.branches:
+            print(f"- {branch}")
+
         return config
 
     def on_page_markdown(self, markdown, page, config, files):
