@@ -22,7 +22,6 @@ class GitChangesPlugin(BasePlugin):
         self.repo = Repo(self.doc_path)
         self.repo.git.config('--global', '--add', 'safe.directory', self.doc_path)
 
-        print(f"Repo description: {self.repo.description}")
         print(f"Repo directory: {self.repo.working_tree_dir}")
         print(f"Is the repo bare? {self.repo.bare}")
 
