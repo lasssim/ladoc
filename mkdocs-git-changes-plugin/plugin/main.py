@@ -30,8 +30,8 @@ class GitChangesPlugin(BasePlugin):
         if self.current_branch_name() == self.reference_branch:
             return markdown       
 
-        diff = self.repo.git.diff(self.reference_branch, '-U65535', '--', page.file.src_path, word_diff=True)
-        if not diff.strip():  # Check if diff is empty
+        diff = self.diff(page)
+        if not diff.strip():
             return markdown        
 
         markdown = self.remove_diff_header(diff)
@@ -94,3 +94,13 @@ class GitChangesPlugin(BasePlugin):
             raise ValueError("Branch name could not be determined from active branch or CI_COMMIT_REF_NAME environment variable.")
 
         return branch_name
+
+    def diff(self, page):
+        self.fetch_reference_branch_if_not_locally_available()
+        return self.repo.git.diff(self.reference_branch, '-U65535', '--', page.file.src_path, word_diff=True)
+
+    def fetch_reference_branch_if_not_locally_available(self):
+        try:
+            self.repo.git.rev_parse('--verify', self.reference_branch)
+        except:
+            self.repo.git.fetch('origin', self.reference_branch)
