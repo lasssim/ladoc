@@ -27,8 +27,7 @@ class GitChangesPlugin(BasePlugin):
     def on_page_markdown(self, markdown, page, config, files):
         self.log.info(page.file.src_path)
 
-        current_branch = self.repo.active_branch.name
-        if current_branch == self.reference_branch:
+        if self.current_branch_name() == self.reference_branch:
             return markdown       
 
         diff = self.repo.git.diff(self.reference_branch, '-U65535', '--', page.file.src_path, word_diff=True)
@@ -81,3 +80,17 @@ class GitChangesPlugin(BasePlugin):
         removed_word_pattern = re.compile(r'\[-(.*?)-\]')
         markdown = re.sub(removed_word_pattern, r'<span class="git_changes_removed" markdown="1">\1</span>', diff)
         return markdown
+    
+    def current_branch_name(self):
+        branch_name = None
+
+        if not self.repo.head.is_detached:
+            branch_name = self.repo.active_branch.name
+
+        if not branch_name:
+            branch_name = os.getenv('CI_COMMIT_REF_NAME')
+
+        if not branch_name:
+            raise ValueError("Branch name could not be determined from active branch or CI_COMMIT_REF_NAME environment variable.")
+
+        return branch_name
