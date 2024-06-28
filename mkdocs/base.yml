@@ -77,7 +77,7 @@ plugins:
     shadow: true
     manual: false
   git-changes: 
-    reference-branch: main
+    reference_branch: main
     doc_path: /docs/docs/
     
 
