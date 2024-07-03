@@ -24,20 +24,20 @@ class GitChangesPlugin(BasePlugin):
         self.repo = Repo(self.doc_path)
         self.repo.git.config('--global', '--add', 'safe.directory', self.doc_path)
 
-        print(f"Repo directory: {self.repo.working_tree_dir}")
-        print(f"Is the repo bare? {self.repo.bare}")
-
-        print("Repo status:")
-        print(self.repo.git.status())
-
-        print("Branches:")
-        for branch in self.repo.branches:
-            print(f"- {branch}")
+#        print(f"Repo directory: {self.repo.working_tree_dir}")
+#        print(f"Is the repo bare? {self.repo.bare}")
+#
+#        print("Repo status:")
+#        print(self.repo.git.status())
+#
+#        print("Branches:")
+#        for branch in self.repo.branches:
+#            print(f"- {branch}")
 
         return config
 
     def on_page_markdown(self, markdown, page, config, files):
-        self.log.info(page.file.src_path)
+#        self.log.info(page.file.src_path)
 
         if self.current_branch_name() == self.reference_branch:
             return markdown       
@@ -56,7 +56,7 @@ class GitChangesPlugin(BasePlugin):
         markdown = self.wrap_added_words(markdown)
         markdown = self.wrap_removed_words(markdown)
 
-        self.log.info(markdown)
+#        self.log.info(markdown)
         return markdown
 
     def remove_yaml_header(self, markdown):
@@ -83,8 +83,8 @@ class GitChangesPlugin(BasePlugin):
             # Get the entire matched block
             block = match.group(0)
 
-            self.log.info('Block:')
-            self.log.info(block)
+#            self.log.info('Block:')
+#            self.log.info(block)
 
 
             # Check if the block includes changes
@@ -137,8 +137,8 @@ class GitChangesPlugin(BasePlugin):
         def replacement(match):
             # Process the matched string as Markdown
             html = md.markdown(match.group(1))
-            self.log.info(match.group(1))
-            self.log.info(html)
+#            self.log.info(match.group(1))
+#            self.log.info(html)
 
             # Add the class to the heading tag
             html = self.add_classes_to_tags(html, ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'], ['git_changes_added'])
@@ -186,14 +186,14 @@ class GitChangesPlugin(BasePlugin):
     def fetch_reference_branch_if_not_locally_available(self):
         # print status of the repo
         print("Repo status")
-        self.log.info(self.repo.git.status('-v'))
+#        self.log.info(self.repo.git.status('-v'))
         try:
             ret = self.repo.git.rev_parse('--verify', '-v', self.reference_branch)
             print("Repo verify")
-            self.log.info(ret)
+#            self.log.info(ret)
         except:
             ret = self.repo.git.fetch('origin', '-v', self.reference_branch)
             print("Fetch reference branch")
-            self.log.info(ret)
+#            self.log.info(ret)
             print("Repo verify")
-            self.log.info(self.repo.git.rev_parse('--verify', '-v', self.reference_branch))
+#            self.log.info(self.repo.git.rev_parse('--verify', '-v', self.reference_branch))
