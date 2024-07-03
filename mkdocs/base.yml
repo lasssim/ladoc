@@ -44,8 +44,6 @@ markdown_extensions:
   pymdownx.emoji:
     emoji_index: !!python/name:material.extensions.emoji.twemoji 
     emoji_generator: !!python/name:material.extensions.emoji.to_svg
-  markdown_include.include:
-    base_path: docs
 
 plugins:
   awesome-pages:
@@ -81,7 +79,17 @@ plugins:
   git-changes: 
     reference_branch: main
     doc_path: /docs/docs/
-    
+  include-markdown:
+    encoding: ascii
+    preserve_includer_indent: false
+    dedent: false
+    trailing_newlines: true
+    comments: true
+    rewrite_relative_urls: true
+    heading_offset: 0
+    start: <!--start-->
+    end: <!--end-->
+    recursive: true  
 
 extra:
   version:

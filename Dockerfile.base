@@ -29,7 +29,7 @@ RUN apk add --no-cache \
     mkdocs-glightbox \
     pymdown-extensions \
     plantuml-markdown \
-    markdown-include \
+    mkdocs-include-markdown-plugin \
   # Download PlantUML
   && wget https://github.com/plantuml/plantuml/releases/download/v${PLANTUML_VERSION}/plantuml-${PLANTUML_VERSION}.jar -O /app/plantuml.jar \
   && echo -e '#!/usr/bin/env sh \njava -Dplantuml.include.path=.:/docs/docs/.ladoc/puml_helpers/:/docs/docs/ -jar /app/plantuml.jar ${@}' >> /usr/local/bin/plantuml \
