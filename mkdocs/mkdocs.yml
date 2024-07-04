@@ -41,8 +41,3 @@ plugins:
     #debug_html: true
     #show_anchors: true
     #verbose: true
-
-extra:
-  version:
-    default: main
-    provider: mike
