@@ -1,10 +1,10 @@
-.git_changes_added {
+.git_changes_added, .git_changes_added img {
   background-color: #e6ffed;
   border-left: 6px solid #34d058;
   padding: 0 2px; /* Top and bottom padding 0, left and right padding 2px */
 }
 
-.git_changes_removed {
+.git_changes_removed, .git_changes_removed img {
   background-color: #ffeef0;
   border-left: 6px solid #d73a49;
   text-decoration: line-through;
