@@ -6,6 +6,7 @@ import re
 import os
 import markdown as md
 from bs4 import BeautifulSoup
+import json
 
 class GitChangesPlugin(BasePlugin):
 
@@ -34,17 +35,21 @@ class GitChangesPlugin(BasePlugin):
 #        for branch in self.repo.branches:
 #            print(f"- {branch}")
 
+        self.reset_changed_pages()
+
         return config
 
     def on_page_markdown(self, markdown, page, config, files):
 #        self.log.info(page.file.src_path)
 
-        if self.current_branch_name() == self.reference_branch:
-            return markdown       
+        #if self.current_branch_name() == self.reference_branch:
+        #    return markdown       
 
         diff = self.diff(page)
         if not diff.strip():
             return markdown        
+        
+        self.add_changed_page(page)
 
         markdown = self.remove_diff_header(diff)
         markdown = self.remove_yaml_header(markdown)
@@ -196,4 +201,33 @@ class GitChangesPlugin(BasePlugin):
 #            print("Fetch reference branch")
 #            self.log.info(ret)
 #            print("Repo verify")
-#            self.log.info(self.repo.git.rev_parse('--verify', '-v', self.reference_branch))
+#            self.log.info(self.repo.git.rev_parse('--verify', '-v',
+#            self.reference_branch))
+
+    def reset_changed_pages(self):
+        filename = 'docs/changed_pages.json'
+#        self.log.info("Resetting changed pages")
+#        self.log.info("Path:" + os.path.abspath(filename))
+        open(filename, 'w').close()
+
+    def add_changed_page(self, page):
+        filename = 'docs/changed_pages.json'
+
+#        self.log.info("Raw File Content:")
+#        with open(filename, 'r') as file:
+#            raw_content = file.read()
+#        self.log.info(raw_content)
+
+        try:
+            with open(filename, 'r') as file:
+                changed_pages = json.load(file)
+        except json.JSONDecodeError:
+            changed_pages = []
+
+#        self.log.info("Changed pages:")
+#        self.log.info(changed_pages)
+
+        changed_pages.append(page.file.src_path)
+        
+        with open(filename, 'w') as file:
+            json.dump(changed_pages, file)

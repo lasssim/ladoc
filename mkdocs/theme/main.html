@@ -5,7 +5,39 @@
   <a href="{{ '../' ~ base_url }}"> 
     <strong>Click here to go to latest.</strong>
   </a>
+
+  
+  <details id="changed_pages" class="note"> 
+    <summary>Changed Pages</summary> 
+    <p> </p>
+  </details>
+
+  <script>
+  // Get the branch from the current URL path
+  const branch = window.location.pathname.split('/')[1];
+
+  fetch(`/${branch}/changed_pages.json`)
+    .then(response => response.json())
+    .then(data => {
+      const list = document.createElement('ul');
+      data.forEach(item => {
+        const listItem = document.createElement('li');
+        const link = document.createElement('a');
+        link.href = `/${branch}/${item}`;
+        link.textContent = item;
+        listItem.appendChild(link);
+        list.appendChild(listItem);
+      });
+      document.querySelector('#changed_pages p').appendChild(list);
+    })
+    .catch(error => console.error('Error:', error));
+  </script>
+
+
+
 {% endblock %}
+
+
 
 {% block styles %}
     {{ super() }}
