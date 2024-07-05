@@ -20,14 +20,14 @@
     .then(response => response.json())
     .then(data => {
       const list = document.createElement('ul');
-      data.forEach(item => {
+      for (const [name, href] of Object.entries(data)) {
         const listItem = document.createElement('li');
         const link = document.createElement('a');
-        link.href = `/${branch}/${item}`;
-        link.textContent = item;
+        link.href = `/${branch}/${href}`;
+        link.textContent = name;
         listItem.appendChild(link);
         list.appendChild(listItem);
-      });
+      }
       document.querySelector('#changed_pages p').appendChild(list);
     })
     .catch(error => console.error('Error:', error));

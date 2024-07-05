@@ -222,12 +222,15 @@ class GitChangesPlugin(BasePlugin):
             with open(filename, 'r') as file:
                 changed_pages = json.load(file)
         except json.JSONDecodeError:
-            changed_pages = []
+            changed_pages = {}
 
 #        self.log.info("Changed pages:")
 #        self.log.info(changed_pages)
 
-        changed_pages.append(page.file.src_path)
-        
+        changed_pages[page.file.src_path] = page.url
+
+        self.log.info("Changed pages:")
+        self.log.info(changed_pages)
+
         with open(filename, 'w') as file:
             json.dump(changed_pages, file)
