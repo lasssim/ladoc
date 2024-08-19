@@ -140,12 +140,12 @@ class GitChangesPlugin(BasePlugin):
     
     def wrap_added_bullets(self, diff):
         # Define the regular expression pattern
-        pattern = re.compile(r'(\{\+(\s*\*\s*)(.*?)\+\})')
+        pattern = re.compile(r'(\{\+(\s*[\*\-]\s*)(.*?)\+\})')
         markdown = re.sub(pattern, r'\2<span class="git_changes_added" markdown="1">\3</span>', diff)
         return markdown
 
     def wrap_removed_bullets(self, diff):
-        pattern = re.compile(r'(\[-(\s*\*\s*)(.*?)-\])')
+        pattern = re.compile(r'(\[-(\s*[\*\-]\s*)(.*?)-\])')
         markdown = re.sub(pattern, r'\2<span class="git_changes_removed" markdown="1">\3</span>', diff)
         return markdown
 
