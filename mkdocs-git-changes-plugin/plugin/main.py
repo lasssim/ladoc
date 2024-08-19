@@ -55,11 +55,25 @@ class GitChangesPlugin(BasePlugin):
         markdown = self.remove_yaml_header(markdown)
 
         markdown = self.wrap_page(markdown)
+
         markdown = self.wrap_changed_blocks(markdown)
+        markdown = self.wrap_changed_tables(markdown)
+
         markdown = self.wrap_added_headings(markdown)
         markdown = self.wrap_removed_headings(markdown)
+
+        markdown = self.wrap_added_bullets(markdown)
+        markdown = self.wrap_removed_bullets(markdown)
+
+        markdown = self.wrap_added_numbers(markdown)
+        markdown = self.wrap_removed_numbers(markdown)
+
+        markdown = self.wrap_added_quotes(markdown)
+        markdown = self.wrap_removed_quotes(markdown)
+
         markdown = self.wrap_added_words(markdown)
         markdown = self.wrap_removed_words(markdown)
+
 
 #        self.log.info(markdown)
         return markdown
@@ -122,6 +136,68 @@ class GitChangesPlugin(BasePlugin):
         markdown = re.sub(removed_word_pattern, r'<span class="git_changes_removed" markdown="1">\1</span>', diff)
         return markdown
     
+    
+    
+    def wrap_added_bullets(self, diff):
+        # Define the regular expression pattern
+        pattern = re.compile(r'(\{\+(\s*\*\s*)(.*?)\+\})')
+        markdown = re.sub(pattern, r'\2<span class="git_changes_added" markdown="1">\3</span>', diff)
+        return markdown
+
+    def wrap_removed_bullets(self, diff):
+        pattern = re.compile(r'(\[-(\s*\*\s*)(.*?)-\])')
+        markdown = re.sub(pattern, r'\2<span class="git_changes_removed" markdown="1">\3</span>', diff)
+        return markdown
+
+
+    def wrap_added_numbers(self, diff):
+        pattern = re.compile(r'(\{\+(\s*\d+\.\s*)(.*?)\+\})')
+        markdown = re.sub(pattern, r'\2<span class="git_changes_added" markdown="1">\3</span>', diff)
+        return markdown
+
+    def wrap_removed_numbers(self, diff):
+        pattern = re.compile(r'(\[-(\s*\d+\.\s*)(.*?)-\])')
+        markdown = re.sub(pattern, r'\2<span class="git_changes_removed" markdown="1">\3</span>', diff)
+        return markdown
+
+
+    def wrap_added_quotes(self, diff):
+        pattern = re.compile(r'(\{\+(\s*>\s*)(.*?)\+\})')
+        markdown = re.sub(pattern, r'\2<span class="git_changes_added" markdown="1">\3</span>', diff)
+        return markdown
+    
+    def wrap_removed_quotes(self, diff):
+        pattern = re.compile(r'(\[-(\s*>\s*)(.*?)-\])')
+        markdown = re.sub(pattern, r'\2<span class="git_changes_removed" markdown="1">\3</span>', diff)
+        return markdown
+
+    def wrap_changed_tables(self, diff):
+        #find tables (each line starting with {+, [- or | 
+        # capture until there is a line that does not start with {+, [- or |
+
+        # Regular expression to match tables
+        pattern = r'(\{\+\s*\|.*?\n|\[-\s*\|.*?\n|\s*\|.*?\n)+'
+
+        def wrap_table(match):
+            # Get the entire matched table
+            table = match.group(0)
+
+            # Check if the table includes changes
+            if re.search(r'(\{\+.*?\+\}|\[-.*?-\])', table):
+                # Remove word-diff wrappers and change markers
+                table = re.sub(r'\{\+(.*?)\+\}', r'\1', table)
+                table = re.sub(r'\[-(.*?)-\]', r'\1', table)
+
+                # Wrap the table in a div with a yellow background
+                return '<div class="git_changes_table_changed" markdown="1">\n' + table + '\n</div>'
+            else:
+                # If the table doesn't include changes, return it unchanged
+                return table
+            
+        # Apply the regular expression and the wrap_table function to the diff
+        diff = re.sub(pattern, wrap_table, diff, flags=re.DOTALL)
+
+        return diff
 
 
     def add_classes_to_tags(self, html, tags, classes):

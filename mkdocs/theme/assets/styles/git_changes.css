@@ -12,7 +12,7 @@
   padding: 0 2px; /* Top and bottom padding 0, left and right padding 2px */
 }
 
-.git_changes_block_changed {
+.git_changes_block_changed, .git_changes_table_changed {
   background-color: #fffbdd;
   border-left: 6px solid #f9d700;
 }
