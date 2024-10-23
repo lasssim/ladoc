@@ -76,6 +76,7 @@ plugins:
   git-changes: 
     reference_branch: main
     doc_path: /docs/docs/
+    enabled_in_dev: false
   include-markdown:
     encoding: ascii
     preserve_includer_indent: false
