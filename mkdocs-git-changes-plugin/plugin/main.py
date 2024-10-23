@@ -12,7 +12,8 @@ class GitChangesPlugin(BasePlugin):
 
     config_scheme = (
         ('reference_branch', config_options.Type(str, default='main')),
-        ('doc_path', config_options.Type(str, default='.'))
+        ('doc_path', config_options.Type(str, default='.')),
+        ('enabled_in_dev', config_options.Type(bool, default=False))
     )
 
     def __init__(self):
@@ -21,6 +22,7 @@ class GitChangesPlugin(BasePlugin):
     def on_config(self, config):
         self.reference_branch = self.config['reference_branch']
         self.doc_path = self.config['doc_path'].rstrip('/')
+        self.enabled_in_dev = self.config['enabled_in_dev'] if 'enabled_in_dev' in self.config else False
 
         self.repo = Repo(self.doc_path)
         self.repo.git.config('--global', '--add', 'safe.directory', self.doc_path)
@@ -39,11 +41,16 @@ class GitChangesPlugin(BasePlugin):
 
         return config
 
-    def on_page_markdown(self, markdown, page, config, files):
-#        self.log.info(page.file.src_path)
 
-        #if self.current_branch_name() == self.reference_branch:
-        #    return markdown       
+    def _enabled(self, config):
+        is_dev_server_running = config['dev_addr'] is not None
+        return (self.enabled_in_dev and is_dev_server_running) or not is_dev_server_running
+            
+    def on_page_markdown(self, markdown, page, config, files):
+        self.log.info(page.file.src_path)
+
+        if not self._enabled(config):
+            return markdown
 
         diff = self.diff(page)
         if not diff.strip():
