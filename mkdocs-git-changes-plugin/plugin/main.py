@@ -291,7 +291,9 @@ class GitChangesPlugin(BasePlugin):
         filename = 'docs/changed_pages.json'
 #        self.log.info("Resetting changed pages")
 #        self.log.info("Path:" + os.path.abspath(filename))
-        open(filename, 'w').close()
+        # remove the file
+        if os.path.exists(filename):
+            os.remove(filename) 
 
     def add_changed_page(self, page):
         filename = 'docs/changed_pages.json'
