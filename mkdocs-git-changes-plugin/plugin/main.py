@@ -36,16 +36,16 @@ class GitChangesPlugin(BasePlugin):
 #        print("Branches:")
 #        for branch in self.repo.branches:
 #            print(f"- {branch}")
-
         self.reset_changed_pages()
 
         return config
-
+    
+    def on_startup(self, command, dirty):
+        self.is_build = command != 'serve'
 
     def _enabled(self, config):
-        is_dev_server_running = config['dev_addr'] is not None
-        return (self.enabled_in_dev and is_dev_server_running) or not is_dev_server_running
-            
+        return (self.enabled_in_dev and not self.is_build) or self.is_build
+         
     def on_page_markdown(self, markdown, page, config, files):
         self.log.info(page.file.src_path)
 
@@ -289,33 +289,20 @@ class GitChangesPlugin(BasePlugin):
 
     def reset_changed_pages(self):
         filename = 'docs/changed_pages.json'
-#        self.log.info("Resetting changed pages")
-#        self.log.info("Path:" + os.path.abspath(filename))
-        # remove the file
+        os.makedirs(os.path.dirname(filename), exist_ok=True)  # Ensure directory exists
         if os.path.exists(filename):
             os.remove(filename) 
 
     def add_changed_page(self, page):
         filename = 'docs/changed_pages.json'
-
-#        self.log.info("Raw File Content:")
-#        with open(filename, 'r') as file:
-#            raw_content = file.read()
-#        self.log.info(raw_content)
-
+        os.makedirs(os.path.dirname(filename), exist_ok=True)  # Ensure directory exists
         try:
             with open(filename, 'r') as file:
                 changed_pages = json.load(file)
-        except json.JSONDecodeError:
+        except (json.JSONDecodeError, FileNotFoundError):
             changed_pages = {}
 
-#        self.log.info("Changed pages:")
-#        self.log.info(changed_pages)
-
         changed_pages[page.file.src_path] = page.url
-
-        self.log.info("Changed pages:")
-        self.log.info(changed_pages)
 
         with open(filename, 'w') as file:
             json.dump(changed_pages, file)
