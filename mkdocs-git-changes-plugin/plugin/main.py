@@ -38,8 +38,9 @@ class GitChangesPlugin(BasePlugin):
 #            print(f"- {branch}")
         self.log.info("Reseting changed pages")
         self.reset_changed_pages()
+       
+        self.site_dir = config['site_dir']
         
-
         return config
     
     def on_startup(self, command, dirty):
@@ -287,15 +288,18 @@ class GitChangesPlugin(BasePlugin):
 #            self.log.info(self.repo.git.rev_parse('--verify', '-v',
 #            self.reference_branch))
 
+    def _changed_pages_filename(self):
+        return os.path.join(self.site_dir, 'changed_pages.json')
+
     def reset_changed_pages(self):
-        filename = 'docs/changed_pages.json'
+        filename = self._changed_pages_filename() 
         os.makedirs(os.path.dirname(filename), exist_ok=True)  # Ensure directory exists
         if os.path.exists(filename):
             os.remove(filename) 
 
     def add_changed_page(self, page):
         self.log.info("Adding changed page: " + page.file.src_path)
-        filename = 'docs/changed_pages.json'
+        filename = self._changed_pages_filename() 
         os.makedirs(os.path.dirname(filename), exist_ok=True)  # Ensure directory exists
         try:
             with open(filename, 'r') as file:
