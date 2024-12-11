@@ -36,7 +36,9 @@ class GitChangesPlugin(BasePlugin):
 #        print("Branches:")
 #        for branch in self.repo.branches:
 #            print(f"- {branch}")
+        self.log.info("Reseting changed pages")
         self.reset_changed_pages()
+        
 
         return config
     
@@ -47,8 +49,6 @@ class GitChangesPlugin(BasePlugin):
         return (self.enabled_in_dev and not self.is_build) or self.is_build
          
     def on_page_markdown(self, markdown, page, config, files):
-        self.log.info(page.file.src_path)
-
         if not self._enabled(config):
             return markdown
 
@@ -294,6 +294,7 @@ class GitChangesPlugin(BasePlugin):
             os.remove(filename) 
 
     def add_changed_page(self, page):
+        self.log.info("Adding changed page: " + page.file.src_path)
         filename = 'docs/changed_pages.json'
         os.makedirs(os.path.dirname(filename), exist_ok=True)  # Ensure directory exists
         try:
