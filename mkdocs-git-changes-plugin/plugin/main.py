@@ -26,6 +26,7 @@ class GitChangesPlugin(BasePlugin):
 
         self.repo = Repo(self.doc_path)
         self.repo.git.config('--global', '--add', 'safe.directory', self.doc_path)
+        self.site_dir = config['site_dir']
 
 #        print(f"Repo directory: {self.repo.working_tree_dir}")
 #        print(f"Is the repo bare? {self.repo.bare}")
@@ -39,7 +40,6 @@ class GitChangesPlugin(BasePlugin):
         self.log.info("Reseting changed pages")
         self.reset_changed_pages()
        
-        self.site_dir = config['site_dir']
         
         return config
     
